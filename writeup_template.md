@@ -50,7 +50,7 @@ python drive.py model.h5
 
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
-###Model Architecture and Training Strategy
+**Model Architecture and Training Strategy**
 
 ####1. An appropriate model architecture has been employed
 
@@ -90,7 +90,7 @@ Dense                                                           (None, 1)
 ```
 
 
-####2. Attempts to reduce overfitting in the model
+**2. Attempts to reduce overfitting in the model **
 
 I didn't used dropout to reduce overfitting instead I trained for less epoch and validation and training losses were taken into account to determine if the model overfitted or not.
 
@@ -100,7 +100,7 @@ The model was trained and validated on different data sets to ensure that the mo
 
 The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 87).
 
-####4. Appropriate training data
+**4. Appropriate training data**
 
 Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road.
 I used left and right camera images and used a correction of 0.25 to the sterring angle and fliped this images with negating the steering angle to produce more data from a single lap. It used to produce 6 times more images compared to non-augmenting.  
@@ -115,7 +115,7 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 
 For details about how I created the training data, see the next section. 
 
-###Model Architecture and Training Strategy
+**Model Architecture and Training Strategy**
 
 ####1. Solution Design Approach
 
