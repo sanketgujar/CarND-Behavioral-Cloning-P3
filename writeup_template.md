@@ -170,6 +170,8 @@ Dense                                                           (None, 1)
 
 ####3. Creation of the Training Set & Training Process
 
+![Training in simulator](examples/car_training.png)
+
 To capture the training data set, I collected the data from simulator by playing manually by operating the steering with mouse.
 
 I used left and right camera images and used a correction of 0.25 to the sterring angle and fliped this images with negating the steering angle to produce more data from a single lap. It used to produce 6 times more images compared to non-augmenting.  
@@ -182,7 +184,7 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 
 4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
 
-![Model Mean-square ](images/model_mse_lost.png)
+![Testing in simulator](examples/testing.png)
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
