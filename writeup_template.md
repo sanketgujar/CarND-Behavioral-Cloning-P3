@@ -60,7 +60,7 @@ I started with using single hidden layer approach explained in the course, but a
 My model is as follows:
 
 ```
-Layer                            Output Shape                                   
+Layer                                                            Output Shape                                   
 ====================================================================================
 Lambda  (Norrmalize the image)                                  (None, 160, 320, 3)                           
 _____________________________________________________________________________________
@@ -92,17 +92,26 @@ Dense                                                           (None, 1)
 
 ####2. Attempts to reduce overfitting in the model
 
-The model contains dropout layers in order to reduce overfitting (model.py lines 21). 
+I didn't used dropout to reduce overfitting instead I trained for less epoch and validation and training losses were taken into account to determine if the model overfitted or not.
 
-The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 10-16). The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 18), here I used sklearn train test split to sperate 20% validation data and trained the model on 80% of the data. The validation score was taken into acount to determine if the model was overfitted or not. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
 
-The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 25).
+The model used an adam optimizer, so the learning rate was not tuned manually (model.py line 87).
 
 ####4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road.
+I used left and right camera images and used a correction of 0.25 to the sterring angle and fliped this images with negating the steering angle to produce more data from a single lap. It used to produce 6 times more images compared to non-augmenting.  
+
+1.) I trained it for 5 laps where 3 laps were clockwise, 1 in anticlockwise and 1 in another challenge envoironment, I guessed with so much data the car will be perfectly trained, but I didn't get the expected results, the model was obviously overfitted.
+
+2.) I removed all the data trained it for 1 lap clockwise and 1 lap anticlockwise, but still was not getting expected results.
+
+3.) Collected data from challenge environment but with precise driving which was very hard, had to do couples of time to get the perfect data, but the efforts did workout the car was showing improved results for turning, but still was going out for some big turns
+
+4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
 
 For details about how I created the training data, see the next section. 
 
@@ -110,52 +119,71 @@ For details about how I created the training data, see the next section.
 
 ####1. Solution Design Approach
 
-The overall strategy for deriving a model architecture was to ...
+The overall strategy for deriving a model architecture was to avoid overfitting and getting accurate changes in steering angles for the car to stay on track.
 
-My first step was to use a convolution neural network model similar to the ... I thought this model might be appropriate because ...
+First I just used a simple DNN with 1 hidden layers, trained fast but perfomed very poorly in the simulator.
 
-In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set. I found that my first model had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. 
+Then I used convolution neural network model similar to Nvidia architecture introduced in the lecture. I thought this model might be appropriate because it was already tested in real world data and was different than the LeNet architecure, So I was curious to try it out.
 
-To combat the overfitting, I modified the model so that ...
+In order to gauge how well the model was working, I split my image and steering angle data into a training and validation set (80%,20%). I found that my first model with epoch 10 had a low mean squared error on the training set but a high mean squared error on the validation set. This implied that the model was overfitting. So I plotted the training and validation error and reduced the epoch to 3 to observe that validation and training score had less difference, so the model will not overfit.   
 
-Then I ... 
+To combat the overfitting, I reduced the number of epoch to 3 and for turning data to 2.
 
-The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track... to improve the driving behavior in these cases, I ....
+The final step was to run the simulator to see how well the car was driving around track one. There were a few spots where the vehicle fell off the track on sharp turns, to improve the driving behavior in these cases, I finetuned the model only for sharp turn scenarios by using specific relevant data and trained it for 2 epoch.
 
 At the end of the process, the vehicle is able to drive autonomously around the track without leaving the road.
 
 ####2. Final Model Architecture
 
-The final model architecture (model.py lines 18-24) consisted of a convolution neural network with the following layers and layer sizes ...
+The final model architecture (model.py lines 75-89) consisted of a convolution neural network with the following layers and layer sizes 
 
-Here is a visualization of the architecture (note: visualizing the architecture is optional according to the project rubric)
+```
+Layer                                                           Output Shape                                   
+====================================================================================
+Lambda  (Norrmalize the image)                                  (None, 160, 320, 3)                           
+_____________________________________________________________________________________
+Cropping2D (Crops the image)                                    (None, 90, 320, 3)                                
+_____________________________________________________________________________________
+Convolution2D (24,5,5, sampling--> (2,2), activation --> relu ) (None, 43, 158, 24)                  
+_____________________________________________________________________________________
+Convolution2D (36,5,5, sampling--> (2,2), activation --> relu ) (None, 20, 77, 36)               
+_____________________________________________________________________________________
+Convolution2D (46,5,5, sampling--> (2,2), activation --> relu ) (None, 8, 37, 48)              
+_____________________________________________________________________________________
+Convolution2D (64,3,3, activation --> relu )                    (None, 6, 35, 64)       
+_____________________________________________________________________________________
+Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64)                 
+_____________________________________________________________________________________
+Flatten                                                         (None, 8448)              
+_____________________________________________________________________________________
+Dense                                                           (None, 100)                           
+_____________________________________________________________________________________
+Dense                                                           (None, 50)          
+_____________________________________________________________________________________
+Dense                                                           (None, 10)                              
+_____________________________________________________________________________________
+Dense                                                           (None, 1)                         
+=====================================================================================
 
-![alt text][image1]
+```
+
 
 ####3. Creation of the Training Set & Training Process
 
-To capture good driving behavior, I first recorded two laps on track one using center lane driving. Here is an example image of center lane driving:
+To capture the training data set, I collected the data from simulator by playing manually by operating the steering with mouse.
 
-![alt text][image2]
+I used left and right camera images and used a correction of 0.25 to the sterring angle and fliped this images with negating the steering angle to produce more data from a single lap. It used to produce 6 times more images compared to non-augmenting.  
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to .... These images show what a recovery looks like starting from ... :
+1.) I trained it for 5 laps where 3 laps were clockwise, 1 in anticlockwise and 1 in another challenge envoironment, I guessed with so much data the car will be perfectly trained, but I didn't get the expected results, the model was obviously overfitted.
 
-![alt text][image3]
-![alt text][image4]
-![alt text][image5]
+2.) I removed all the data trained it for 1 lap clockwise and 1 lap anticlockwise, but still was not getting expected results.
 
-Then I repeated this process on track two in order to get more data points.
+3.) Collected data from challenge environment but with precise driving which was very hard, had to do couples of time to get the perfect data, but the efforts did workout the car was showing improved results for turning, but still was going out for some big turns
 
-To augment the data sat, I also flipped images and angles thinking that this would ... For example, here is an image that has then been flipped:
+4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
 
-![alt text][image6]
-![alt text][image7]
+![Model Mean-square ](images/model_mse_lost.png)
 
-Etc ....
+I finally randomly shuffled the data set and put 20% of the data into a validation set. 
 
-After the collection process, I had X number of data points. I then preprocessed this data by ...
-
-
-I finally randomly shuffled the data set and put Y% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was Z as evidenced by ... I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 3 and as I used an adam optimizer so that manually training the learning rate wasn't necessary.
