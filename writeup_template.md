@@ -54,9 +54,41 @@ The model.py file contains the code for training and saving the convolution neur
 
 ####1. An appropriate model architecture has been employed
 
-My model consists of a convolution neural network with 3x3 filter sizes and depths between 32 and 128 (model.py lines 18-24) 
 
-The model includes RELU layers to introduce nonlinearity (code line 20), and the data is normalized in the model using a Keras lambda layer (code line 18). 
+I started with using single hidden layer approach explained in the course, but as it wasn't able to drive efficiently, I later used the Nvidia model explained in the lecture, I used a correction of 0.25 for left and right images sterring angles and also fliped the images for augmentations.  
+
+My model is as follows:
+
+```
+Layer                            Output Shape                                   
+====================================================================================
+Lambda  (Norrmalize the image)                                  (None, 160, 320, 3)                           
+_____________________________________________________________________________________
+Cropping2D (Crops the image)                                    (None, 90, 320, 3)                                
+_____________________________________________________________________________________
+Convolution2D (24,5,5, sampling--> (2,2), activation --> relu ) (None, 43, 158, 24)                  
+_____________________________________________________________________________________
+Convolution2D (36,5,5, sampling--> (2,2), activation --> relu ) (None, 20, 77, 36)               
+_____________________________________________________________________________________
+Convolution2D (46,5,5, sampling--> (2,2), activation --> relu ) (None, 8, 37, 48)              
+_____________________________________________________________________________________
+Convolution2D (64,3,3, activation --> relu )                    (None, 6, 35, 64)       
+_____________________________________________________________________________________
+Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64)                 
+_____________________________________________________________________________________
+Flatten                                                         (None, 8448)              
+_____________________________________________________________________________________
+Dense                                                           (None, 100)                           
+_____________________________________________________________________________________
+Dense                                                           (None, 50)          
+_____________________________________________________________________________________
+Dense                                                           (None, 10)                              
+_____________________________________________________________________________________
+Dense                                                           (None, 1)                         
+=====================================================================================
+
+```
+
 
 ####2. Attempts to reduce overfitting in the model
 
