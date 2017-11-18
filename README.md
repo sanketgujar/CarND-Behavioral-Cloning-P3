@@ -159,6 +159,15 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 
 4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
 
+Below are the examples of training set used :
+![center_camera](/Images/center.jpg)
+![left_camera](/Images/left.jpg)
+![right_camera](/Images/right.jpg)
+![flipped_center_image](/Images/fliped_image.jpg)
+
+
+
+
 ![Testing in simulator](examples/testing.png)
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. 
