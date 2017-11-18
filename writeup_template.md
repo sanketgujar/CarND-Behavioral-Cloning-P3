@@ -130,7 +130,7 @@ Right Camera
 ![right_camera](/Images/right.jpg)
 
 Flipped Center Image
-![flipped_center_image](/Images/fliped_image.jpg
+![flipped_center_image](/Images/fliped_image.jpg)
 
 
 For details about how I created the training data, see the next section. 
