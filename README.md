@@ -13,6 +13,58 @@ My project includes the following files:
 
 The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
 
+#**Behavioral Cloning** 
+
+##Writeup Template
+
+###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+
+---
+
+**Behavioral Cloning Project**
+
+The goals / steps of this project are the following:
+* Use the simulator to collect data of good driving behavior
+* Build, a convolution neural network in Keras that predicts steering angles from images
+* Train and validate the model with a training and validation set
+* Test that the model successfully drives around track one without leaving the road
+* Summarize the results with a written report
+
+
+[//]: # (Image References)
+
+[image1]: ./examples/placeholder.png "Model Visualization"
+[image2]: ./examples/placeholder.png "Grayscaling"
+[image3]: ./examples/placeholder_small.png "Recovery Image"
+[image4]: ./examples/placeholder_small.png "Recovery Image"
+[image5]: ./examples/placeholder_small.png "Recovery Image"
+[image6]: ./examples/placeholder_small.png "Normal Image"
+[image7]: ./examples/placeholder_small.png "Flipped Image"
+
+## Rubric Points
+###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
+
+---
+###Files Submitted & Code Quality
+
+####1. Submission includes all required files and can be used to run the simulator in autonomous mode
+
+My project includes the following files:
+* model.py containing the script to create and train the model
+* drive.py for driving the car in autonomous mode
+* model.h5 containing a trained convolution neural network 
+* writeup_report.md or writeup_report.pdf summarizing the results
+
+####2. Submission includes functional code
+Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
+```sh
+python drive.py model.h5
+```
+
+####3. Submission code is usable and readable
+
+The model.py file contains the code for training and saving the convolution neural network. The file shows the pipeline I used for training and validating the model, and it contains comments to explain how the code works.
+
 **Model Architecture and Training Strategy**
 
 ####1. An appropriate model architecture has been employed
@@ -41,15 +93,9 @@ Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64
 _____________________________________________________________________________________
 Flatten                                                         (None, 8448)              
 _____________________________________________________________________________________
-Dropout (0.5)                                                                  
-_____________________________________________________________________________________
 Dense                                                           (None, 100)                           
 _____________________________________________________________________________________
-Dropout (0.3)                                                                
-_____________________________________________________________________________________
 Dense                                                           (None, 50)          
-_____________________________________________________________________________________
-Dropout (0.2)                                                                  
 _____________________________________________________________________________________
 Dense                                                           (None, 10)                              
 _____________________________________________________________________________________
@@ -61,7 +107,7 @@ Dense                                                           (None, 1)
 
 **2. Attempts to reduce overfitting in the model **
 
-I used dropout with low probability to reduce overfitting and also I trained for appropriate epoch where validation and training losses were taken into account to determine if the model overfitted or not.
+I didn't used dropout to reduce overfitting instead I trained for less epoch and validation and training losses were taken into account to determine if the model overfitted or not.
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 18), here I used sklearn train test split to sperate 20% validation data and trained the model on 80% of the data. The validation score was taken into acount to determine if the model was overfitted or not. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
@@ -107,7 +153,7 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 The final model architecture (model.py lines 75-89) consisted of a convolution neural network with the following layers and layer sizes 
 
 ```
-Layer                                                            Output Shape                                   
+Layer                                                           Output Shape                                   
 ====================================================================================
 Lambda  (Norrmalize the image)                                  (None, 160, 320, 3)                           
 _____________________________________________________________________________________
@@ -125,15 +171,9 @@ Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64
 _____________________________________________________________________________________
 Flatten                                                         (None, 8448)              
 _____________________________________________________________________________________
-Dropout (0.5)                                                                  
-_____________________________________________________________________________________
 Dense                                                           (None, 100)                           
 _____________________________________________________________________________________
-Dropout (0.3)                                                                
-_____________________________________________________________________________________
 Dense                                                           (None, 50)          
-_____________________________________________________________________________________
-Dropout (0.2)                                                                  
 _____________________________________________________________________________________
 Dense                                                           (None, 10)                              
 _____________________________________________________________________________________
@@ -158,24 +198,6 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 3.) Collected data from challenge environment but with precise driving which was very hard, had to do couples of time to get the perfect data, but the efforts did workout the car was showing improved results for turning, but still was going out for some big turns
 
 4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
-
-Below are the examples of training set used :
-
-Center camera
-![center_camera](/Images/center.jpg)
-
-left Camera
-![left_camera](/Images/left.jpg)
-
-Right Camera
-![right_camera](/Images/right.jpg)
-
-Flipped Center Image
-![flipped_center_image](/Images/fliped_image.jpg)
-
-The left and right camera were also flipped similar to the center represented above.
-
-
 
 ![Testing in simulator](examples/testing.png)
 
