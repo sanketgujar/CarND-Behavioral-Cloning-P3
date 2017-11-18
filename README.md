@@ -41,9 +41,15 @@ Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64
 _____________________________________________________________________________________
 Flatten                                                         (None, 8448)              
 _____________________________________________________________________________________
+Dropout (0.5)                                                                  
+_____________________________________________________________________________________
 Dense                                                           (None, 100)                           
 _____________________________________________________________________________________
+Dropout (0.3)                                                                
+_____________________________________________________________________________________
 Dense                                                           (None, 50)          
+_____________________________________________________________________________________
+Dropout (0.2)                                                                  
 _____________________________________________________________________________________
 Dense                                                           (None, 10)                              
 _____________________________________________________________________________________
@@ -55,7 +61,7 @@ Dense                                                           (None, 1)
 
 **2. Attempts to reduce overfitting in the model **
 
-I didn't used dropout to reduce overfitting instead I trained for less epoch and validation and training losses were taken into account to determine if the model overfitted or not.
+I used dropout with low probability to reduce overfitting and also I trained for appropriate epoch where validation and training losses were taken into account to determine if the model overfitted or not.
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 18), here I used sklearn train test split to sperate 20% validation data and trained the model on 80% of the data. The validation score was taken into acount to determine if the model was overfitted or not. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
@@ -101,7 +107,7 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 The final model architecture (model.py lines 75-89) consisted of a convolution neural network with the following layers and layer sizes 
 
 ```
-Layer                                                           Output Shape                                   
+Layer                                                            Output Shape                                   
 ====================================================================================
 Lambda  (Norrmalize the image)                                  (None, 160, 320, 3)                           
 _____________________________________________________________________________________
@@ -119,9 +125,15 @@ Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64
 _____________________________________________________________________________________
 Flatten                                                         (None, 8448)              
 _____________________________________________________________________________________
+Dropout (0.5)                                                                  
+_____________________________________________________________________________________
 Dense                                                           (None, 100)                           
 _____________________________________________________________________________________
+Dropout (0.3)                                                                
+_____________________________________________________________________________________
 Dense                                                           (None, 50)          
+_____________________________________________________________________________________
+Dropout (0.2)                                                                  
 _____________________________________________________________________________________
 Dense                                                           (None, 10)                              
 _____________________________________________________________________________________
