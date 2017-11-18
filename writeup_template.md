@@ -119,6 +119,20 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 
 4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
 
+
+Center camera
+![center_camera](/Images/center.jpg)
+
+left Camera
+![left_camera](/Images/left.jpg)
+
+Right Camera
+![right_camera](/Images/right.jpg)
+
+Flipped Center Image
+![flipped_center_image](/Images/fliped_image.jpg
+
+
 For details about how I created the training data, see the next section. 
 
 **Model Architecture and Training Strategy**
@@ -195,17 +209,6 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 
 4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
 
-Center camera
-![center_camera](/Images/center.jpg)
-
-left Camera
-![left_camera](/Images/left.jpg)
-
-Right Camera
-![right_camera](/Images/right.jpg)
-
-Flipped Center Image
-![flipped_center_image](/Images/fliped_image.jpg
 
 ![Testing in simulator](examples/testing.png)
 
