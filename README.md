@@ -163,10 +163,13 @@ Below are the examples of training set used :
 
 Center camera
 ![center_camera](/Images/center.jpg)
+
 left Camera
 ![left_camera](/Images/left.jpg)
+
 Right Camera
 ![right_camera](/Images/right.jpg)
+
 Flipped Center Image
 ![flipped_center_image](/Images/fliped_image.jpg)
 
