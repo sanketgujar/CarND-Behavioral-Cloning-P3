@@ -60,7 +60,7 @@ I started with using single hidden layer approach explained in the course, but a
 My model is as follows:
 
 ```
-Layer                                                            Output Shape                                   
+Layer                                                           Output Shape                                   
 ====================================================================================
 Lambda  (Norrmalize the image)                                  (None, 160, 320, 3)                           
 _____________________________________________________________________________________
@@ -78,22 +78,28 @@ Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64
 _____________________________________________________________________________________
 Flatten                                                         (None, 8448)              
 _____________________________________________________________________________________
+Dropout (0.5)                                                                  
+_____________________________________________________________________________________
 Dense                                                           (None, 100)                           
+_____________________________________________________________________________________
+Dropout (0.3)                                                                
 _____________________________________________________________________________________
 Dense                                                           (None, 50)          
 _____________________________________________________________________________________
+Dropout (0.2)                                                                  
+_____________________________________________________________________________________
 Dense                                                           (None, 10)                              
 _____________________________________________________________________________________
-Dense                                                           (None, 1)                         
-=====================================================================================
+Dense                                                           (None, 1)                =====================================================================================
+
 
 ```
 
 
 **2. Attempts to reduce overfitting in the model **
 
-I didn't used dropout to reduce overfitting instead I trained for less epoch and validation and training losses were taken into account to determine if the model overfitted or not.
-
+I used dropout with low probability to reduce overfitting and also I trained for appropriate epoch where validation and training losses were taken into account to determine if the model overfitted or not.
+  
 The model was trained and validated on different data sets to ensure that the model was not overfitting (code line 18), here I used sklearn train test split to sperate 20% validation data and trained the model on 80% of the data. The validation score was taken into acount to determine if the model was overfitted or not. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
 
 ####3. Model parameter tuning
@@ -156,14 +162,19 @@ Convolution2D (64,3,3, activation --> relu )                    (None, 4, 33, 64
 _____________________________________________________________________________________
 Flatten                                                         (None, 8448)              
 _____________________________________________________________________________________
+Dropout (0.5)                                                                  
+_____________________________________________________________________________________
 Dense                                                           (None, 100)                           
+_____________________________________________________________________________________
+Dropout (0.3)                                                                
 _____________________________________________________________________________________
 Dense                                                           (None, 50)          
 _____________________________________________________________________________________
+Dropout (0.2)                                                                  
+_____________________________________________________________________________________
 Dense                                                           (None, 10)                              
 _____________________________________________________________________________________
-Dense                                                           (None, 1)                         
-=====================================================================================
+Dense                                                           (None, 1)                =====================================================================================
 
 ```
 
@@ -183,6 +194,18 @@ I used left and right camera images and used a correction of 0.25 to the sterrin
 3.) Collected data from challenge environment but with precise driving which was very hard, had to do couples of time to get the perfect data, but the efforts did workout the car was showing improved results for turning, but still was going out for some big turns
 
 4.) Collected data in seperate folder only for difficult turns in the route by going through them 2 times, also collected data if the vechiles has to return to the center of the road if its off-road. I just loaded the previous model and trained again using the same weights for 2 epochs (fine-tuning) and Kudos everthing worked. 
+
+Center camera
+![center_camera](/Images/center.jpg)
+
+left Camera
+![left_camera](/Images/left.jpg)
+
+Right Camera
+![right_camera](/Images/right.jpg)
+
+Flipped Center Image
+![flipped_center_image](/Images/fliped_image.jpg
 
 ![Testing in simulator](examples/testing.png)
 
